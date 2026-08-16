@@ -19,7 +19,7 @@ Transports specify how to achieve stable data transmission. Both ends of a conne
   "http_upgrade_settings": {},
   "xhttp_settings": {},
   "http_settings": {},
-  "grpc_settings": {},
+  "grpc_settings": {}
 }
 ```
 
@@ -76,7 +76,7 @@ Transports specify how to achieve stable data transmission. Both ends of a conne
   "verify": "...",
   "is_early_data": "...",
   "early_data_len": "...",
-  "alpn": "...",
+  "alpn": "..."
 }
 ```
 
@@ -122,7 +122,7 @@ Transports specify how to achieve stable data transmission. Both ends of a conne
   "version_z": "...",
   "is_early_data": "...",
   "early_data_len": "...",
-  "alpn": "...",
+  "alpn": "..."
 }
 ```
 
@@ -177,7 +177,7 @@ Transports specify how to achieve stable data transmission. Both ends of a conne
 ```json
 {
   "type": "...",
-  "request": {},
+  "request": {}
 }
 ```
 
@@ -199,7 +199,7 @@ Transports specify how to achieve stable data transmission. Both ends of a conne
   "version": "...",
   "method": "...",
   "path": "...",
-  "headers": "...",
+  "headers": "..."
 }
 ```
 
@@ -277,7 +277,7 @@ Transports specify how to achieve stable data transmission. Both ends of a conne
   "no_grpc_header": "...",
   "x_padding_bytes_min": "...",
   "x_padding_bytes_max": "...",
-  "packet_up_interval_ms": "...",
+  "packet_up_interval_ms": "..."
 }
 ```
 

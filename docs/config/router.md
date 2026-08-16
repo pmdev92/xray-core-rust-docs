@@ -40,7 +40,7 @@ When no rules match, the traffic is sent out by the first outbound by default.
   "port": [],
   "domain": ["..."],
   "ip": ["..."],
-  "outbound_tag": "...",
+  "outbound_tag": "..."
 }
 ```
 

@@ -12,7 +12,7 @@ The `InboundObject` corresponds to a subelement of the `inbounds` item in the co
     {
       "tag": "identifier",
       "protocol": "protocol_name",
-      "settings": {},
+      "settings": {}
     }
   ]
 }
