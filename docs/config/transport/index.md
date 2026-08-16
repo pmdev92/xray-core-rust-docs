@@ -1,12 +1,12 @@
 # Transport
 
-Transports specify how Xray Core Rust communicates with peers.
+Transport specify how Xray Core Rust communicates with peers.
 
-Transports specify how to achieve stable data transmission. Both ends of a connection often need to specify the same transport protocol to successfully establish a connection. Like, if one end uses WebSocket, the other end must also use WebSocket, or else the connection cannot be established.
+Transport specify how to achieve stable data transmission. Both ends of a connection often need to specify the same transport protocol to successfully establish a connection. Like, if one end uses WebSocket, the other end must also use WebSocket, or else the connection cannot be established.
 
 ## StreamSettingsObject
 
-`StreamSettingsObject` corresponds to the `streamSettings` property in the inbound or outbound config. Each inbound or outbound can be configured with different transports and can use `streamSettings` to specify local configs.
+`StreamSettingsObject` corresponds to the `streamSettings` property in the inbound or outbound config. Each inbound or outbound can be configured with different transport and can use `streamSettings` to specify local configs.
 
 ```json
 {
