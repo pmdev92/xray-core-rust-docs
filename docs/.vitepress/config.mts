@@ -26,7 +26,6 @@ export default defineConfig({
                     { text: 'Inbounds', link: '/config/inbounds/socks' },
               ]
             },
-
             {
               text: 'Outbound Protocols',
               collapsed: true,
@@ -43,7 +42,21 @@ export default defineConfig({
                     { text: 'Hysteria2', link: '/config/outbounds/hysteria2' },
               ]
             },
-            { text: 'Transport', link: '/config/transport' },
+            {
+                text: 'Transports',
+                collapsed: true,
+                items:  [
+                    { text: 'Basic', link: '/config/transports' },
+                    { text: 'Tcp', link: '/config/transports/tcp' },
+                    { text: 'Websocket', link: '/config/transports/websocket' },
+                    { text: 'HttpUpgrade', link: '/config/transports/http-upgrade' },
+                    { text: 'Xhttp', link: '/config/transports/xhttp' },
+                    { text: 'Http', link: '/config/transports/http' },
+                    { text: 'Grpc', link: '/config/transports/grpc' },
+                    { text: 'Tls', link: '/config/transports/tls' },
+                    { text: 'Reality', link: '/config/transports/reality' },
+                ]
+            },
             { text: 'Router', link: '/config/router' },
           ]
         }
