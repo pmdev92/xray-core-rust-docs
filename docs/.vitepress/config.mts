@@ -43,7 +43,7 @@ export default defineConfig({
                     { text: 'Hysteria2', link: '/config/outbounds/hysteria2' },
               ]
             },
-            { text: 'Transports', link: '/config/transports' },
+            { text: 'Transport', link: '/config/transport' },
             { text: 'Router', link: '/config/router' },
           ]
         }
