@@ -44,7 +44,7 @@ The `OutboundObject` corresponds to a subelement of the `Outbounds` item in the 
 - **Description**: The specific configuration content varies depending on the protocol. See `OutboundConfigurationObject` in each protocol for details.
 
 
-> `stream_settings`: [StreamSettingsObject](/config/transports)
+> `stream_settings`: [StreamSettingsObject](/config/transports/index.md)
 - **Optional**: Yes
 - **Description**: The underlying transport method is the way the current outbound connects with other side.
 
