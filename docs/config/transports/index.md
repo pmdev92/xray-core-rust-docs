@@ -1,12 +1,15 @@
+---
+title: Transports
+lang: en-US
+---
+
 # Transports
 
-Transports specify how Xray Core Rust communicates with peers.
-
-Transports specify how to achieve stable data transmission. Both ends of a connection often need to specify the same transports protocol to successfully establish a connection. Like, if one end uses WebSocket, the other end must also use WebSocket, or else the connection cannot be established.
+Transports specify how Xray Core Rust communicates with peers. Both ends of a connection must use the same transport protocol to establish a successful connection.
 
 ## StreamSettingsObject
 
-`StreamSettingsObject` corresponds to the `streamSettings` property in the inbound or outbound config. Each inbound or outbound can be configured with different transport and can use `streamSettings` to specify local configs.
+`StreamSettingsObject` corresponds to the `streamSettings` property in the inbound or outbound configuration. Each inbound or outbound can be configured with different transport methods using `streamSettings`.
 
 ```json
 {
@@ -25,44 +28,66 @@ Transports specify how to achieve stable data transmission. Both ends of a conne
 
 ### Parameters
 
-> **`network`**: `"tcp"` | `"xhttp"` |  `"ws"` | `"http_upgrade"` | `"grpc"` | `"http"`
-- **Optional**: No
-- **Description**: The underlying protocol of the transport used by the data stream of the connection.
+> **`network`**: `"tcp"` | `"ws"` | `"http_upgrade"` | `"xhttp"` | `"http"` | `"grpc"` | `"reality"`
+> - **Optional**: No
+> - **Description**: The underlying transport protocol used by the data stream of the connection.
 
-
-> **`security`**: `"none"` | `"tls"` |  `"reality"` 
-- **Optional**: No
-- **Description**: Whether to enable transport layer encryption.
+> **`security`**: `"none"` | `"tls"` | `"reality"`
+> - **Optional**: No
+> - **Description**: Whether to enable transport layer encryption. `"tls"` enables standard TLS, `"reality"` enables REALITY advanced encryption.
 
 > **`tcp_settings`**: [TcpObject](./tcp.md)
-- **Optional**: Yes
-- **Description**: Configures the tcp transport.
+> - **Optional**: Yes
+> - **Description**: Configures the TCP transport with optional HTTP header obfuscation.
 
 > **`ws_settings`**: [WebSocketObject](./websocket.md)
-- **Optional**: Yes
-- **Description**: Configures the websocket transport.
+> - **Optional**: Yes
+> - **Description**: Configures the WebSocket transport.
 
 > **`http_upgrade_settings`**: [HttpUpgradeObject](./http-upgrade.md)
-- **Optional**: Yes
-- **Description**: Configures the http upgrade transport.
+> - **Optional**: Yes
+> - **Description**: Configures the HTTP Upgrade transport.
 
-> **`xhttp_settings`**: [XHttpObject](./xhttp.md))
-- **Optional**: Yes
-- **Description**: Configures the xhttp transport.
+> **`xhttp_settings`**: [XHttpObject](./xhttp.md)
+> - **Optional**: Yes
+> - **Description**: Configures the XHTTP transport with advanced obfuscation options.
 
 > **`http_settings`**: [HttpObject](./http.md)
-- **Optional**: Yes
-- **Description**: Configures the http/2 transport.
+> - **Optional**: Yes
+> - **Description**: Configures the HTTP/2 transport.
 
 > **`grpc_settings`**: [GrpcObject](./grpc.md)
-- **Optional**: Yes
-- **Description**: Configures the grpc transport.
+> - **Optional**: Yes
+> - **Description**: Configures the gRPC transport.
 
 > **`tls_settings`**: [TLSObject](./tls.md)
-- **Optional**: Yes
-- **Description**: Configures Tls.
+> - **Optional**: Yes
+> - **Description**: Configures TLS encryption settings.
 
 > **`reality_settings`**: [RealityObject](./reality.md)
-- **Optional**: Yes
-- **Description**: Configures REALITY. REALITY is a piece of advanced encryption technology developed in-house, with higher security than vanilla TLS, but configs of both are largely the same.
+> - **Optional**: Yes
+> - **Description**: Configures REALITY encryption settings. REALITY is an advanced encryption technology developed in-house, providing higher security than vanilla TLS.
 
+### Transport & Security Combinations
+
+| Network | Security | Description |
+|---------|----------|-------------|
+| `tcp` | `none` | Plain TCP connection |
+| `tcp` | `tls` | TCP with TLS encryption |
+| `tcp` | `reality` | TCP with REALITY encryption |
+| `ws` | `none` | Plain WebSocket connection |
+| `ws` | `tls` | WebSocket with TLS encryption |
+| `ws` | `reality` | WebSocket with REALITY encryption |
+| `http_upgrade` | `none` | Plain HTTP Upgrade |
+| `http_upgrade` | `tls` | HTTP Upgrade with TLS |
+| `http_upgrade` | `reality` | HTTP Upgrade with REALITY |
+| `xhttp` | `none` | XHTTP without encryption |
+| `xhttp` | `tls` | XHTTP with TLS |
+| `xhttp` | `reality` | XHTTP with REALITY |
+| `http` | `none` | HTTP/2 without encryption |
+| `http` | `tls` | HTTP/2 with TLS |
+| `http` | `reality` | HTTP/2 with REALITY |
+| `grpc` | `none` | Plain gRPC connection |
+| `grpc` | `tls` | gRPC with TLS encryption |
+| `grpc` | `reality` | gRPC with REALITY encryption |
+| `reality` | `reality` | Full REALITY transport |

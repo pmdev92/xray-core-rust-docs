@@ -1,8 +1,15 @@
-# SOCKS Inbound
+---
+title: SOCKS5 Inbound
+lang: en-US
+---
 
-The standard SOCKS protocol implementation is compatible with SOCKS5.
+# SOCKS5 Inbound
 
-The use of `SOCKS` inbound is more meaningful in a local area network or local environment, where it can be used to listen for incoming connections and provide local services to other programs.
+The SOCKS5 inbound protocol implements the standard SOCKS5 protocol for receiving incoming connections.
+
+The SOCKS5 inbound is useful for local area network or local environments where it listens for incoming connections and provides local proxy services to other programs.
+
+Supports TCP and UDP connections, as well as full cone NAT traversal. Authentication is currently in development.
 
 ## InboundConfigurationObject
 
@@ -13,11 +20,19 @@ The use of `SOCKS` inbound is more meaningful in a local area network or local e
 }
 ```
 
-> **`listen`**: *string*
-- **Optional**: No
-- **Description**: The listening address, either an available IPV4 or IPV6 address.
+### Parameters
 
+> **`listen`**: *string*
+> - **Optional**: No
+> - **Description**: The listening address. Must be a valid IPv4 or IPv6 address.
 
 > **`port`**: *number*
-- **Optional**: No
-- **Description**: The listening port number, either an available port number.
+> - **Optional**: No
+> - **Description**: The listening port number. Must be an available port number.
+
+### Features
+
+- ✅ TCP support
+- ✅ UDP support
+- ✅ Full Cone NAT
+- 🚧 Authentication (in progress)

@@ -1,6 +1,13 @@
-# Freedom Outbound
+---
+title: Freedom Outbound
+lang: en-US
+---
 
-Freedom is an outbound protocol that can be used to send (normal) TCP or UDP data to any network.
+# Freedom (Direct) Outbound
+
+Freedom is an outbound protocol that sends TCP or UDP data directly to any network destination without any encryption or obfuscation.
+
+This is the default outbound and is commonly used for direct connections or when no proxy is needed.
 
 ## OutboundConfigurationObject
 
@@ -8,3 +15,12 @@ Freedom is an outbound protocol that can be used to send (normal) TCP or UDP dat
 {
 }
 ```
+
+Freedom outbound has no specific settings.
+
+### Features
+
+- ✅ TCP support
+- ✅ UDP support
+- ✅ No encryption
+- ✅ No transport required

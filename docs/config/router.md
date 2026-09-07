@@ -1,9 +1,13 @@
-# Router
+---
+title: Router Configuration
+lang: en-US
+---
 
-The router module can send inbound data through different outbound connections according to different rules to achieve on-demand proxying.
+# Router Configuration
 
-A common use case is to split domestic and foreign traffic. Xray core rust can use its internal mechanisms to determine the traffic from different regions and then send them to different outbound proxies.
+The router module sends inbound traffic through different outbound connections based on defined rules, enabling on-demand proxying.
 
+A common use case is splitting domestic and foreign traffic. Xray Core Rust uses internal mechanisms to determine traffic origin and route it to appropriate outbound proxies.
 
 ## RoutingObject
 
@@ -12,24 +16,23 @@ A common use case is to split domestic and foreign traffic. Xray core rust can u
 ```json
 {
   "router": {
-    "rules": []
+    "rules": [],
+    "balancers": []
   }
 }
 ```
 
-
 ### Parameters
 
-**`rules`**: [[RuleObject](#ruleobject)]
+**`rules`**: `[[RuleObject]](/config/router)`
 - **Optional**: Yes
-- **Description**: An array corresponding to a list of rules.
+- **Description**: An array of routing rules. Rules are evaluated from top to bottom, and the first matching rule determines the outbound.
 
-For each connection, the routing will judge these rules from top to bottom in order. When it encounters the first effective rule, it will forward the connection to the `outbound_tag` specified by the rule.
+> **Tip**: When no rules match, traffic is sent through the first outbound by default.
 
-::: tip
-When no rules match, the traffic is sent out by the first outbound by default.
-:::
-
+**`balancers`**: `[[BalancerConfig]](/config/router)`
+- **Optional**: Yes
+- **Description**: An array of outbound balancer configurations for load-balanced traffic distribution.
 
 ### RuleObject
 
@@ -37,38 +40,157 @@ When no rules match, the traffic is sent out by the first outbound by default.
 {
   "protocol": ["..."],
   "network": ["..."],
-  "port": [],
+  "port": "",
   "domain": ["..."],
   "ip": ["..."],
-  "outbound_tag": "..."
+  "outbound_tag": "...",
+  "balancer_tag": "..."
 }
 ```
 
-::: danger
-When multiple attributes are specified at the same time, these attributes need to be satisfied **simultaneously** in order for the current rule to take effect.
-:::
+> **Warning**: When multiple attributes are specified simultaneously, all conditions must be met for the rule to take effect.
 
-**`protocol`**: *[ '"http"' | '"tls"' | '"quic"' | '"dns"' ]*
+**`protocol`**: `["http" | "tls" | "quic" | "dns"]`
 - **Optional**: Yes
-- **Description**: An array where each item represents a protocol. This rule will take effect when the protocol of the current connection matches any of the protocols in the array.
+- **Description**: Protocols detected via traffic sniffing (SNI, HTTP headers, QUIC packets, DNS queries).
 
-**`network`**: *[ '"udp"' | '"tcp"' ]*
+**`network`**: `["tcp" | "udp"]`
 - **Optional**: Yes
-- **Description**: An array where each item represents a network. This rule will take effect when the network of the current connection matches any of the networks in the array.
+- **Description**: The transport layer network type. `tcp` for TCP connections (HTTP, HTTPS, WebSocket, etc.), `udp` for UDP connections (QUIC, DNS, etc.).
 
-
-**`port`**: *[ number ]*
+**`port`**: `string`
 - **Optional**: Yes
-- **Description**: An array where each item represents a port. This rule will take effect when the port of the current connection matches any of the port in the array.
+- **Description**: Port matching supports single ports, ranges, and comma-separated lists:
+  - Single port: `"80"`
+  - Port range: `"80-443"` (includes both ends)
+  - Multiple: `"80,443,8080-8089"`
+  - Matching is exact: the connection's target port must equal one of the parsed values.
 
-**`domain`**: *[ string ]*
+**`domain`**: `[string]`
 - **Optional**: Yes
-- **Description**: An array where each item represents a domain. This rule will take effect when the domain of the current connection matches any of the domain in the array.
+- **Description**: An array of domains to match. Supports multiple matching types via prefixes:
+  - `keyword:` or plain text - partial match (contains)
+  - `domain:` - subdomain match (ends with `.domain`)
+  - `full:` - exact match
+  - `regexp:` - regex pattern match
+  -  GeoSITE lookup: `geo:CODE` - GeoSite database match (e.g., `"geo:IR"`)
+  -  Custom GeoSITE lookup: `geo:FILE,CODE` - GeoSite database match (e.g., `"geo:path-to-geo-site,IR"`)
 
-**`ip`**: *[ string ]*
+**`ip`**: `[string]`
 - **Optional**: Yes
-- **Description**: An array where each item represents a ip. This rule will take effect when the ip of the current connection matches any of the ip in the array.
+- **Description**: IP matching supports CIDR notation and GeoIP database lookups:
+  - Single ip format: `"192.168.1.0"`
+  - CIDR format: `"192.168.1.0/24"`
+  - GeoIP lookup: `"geo:CODE"` (matches all IPs in country `CODE`)
+  - Custom GeoIP file: `"geo:FILE,CODE"` (e.g., `"geo:path-to-geo-ip,IR"`)
 
-**`outbound_tag`**: *string*
+**`outbound_tag`**: `string`
+- **Optional**: Yes
+- **Description**: The tag identifier of the target outbound connection.
+
+**`balancer_tag`**: `string`
+- **Optional**: Yes
+- **Description**: The tag identifier of a balancer group. Use this instead of `outbound_tag` when using a balancer.
+
+### BalancerConfig
+
+```json
+{
+  "tag": "balancer-tag",
+  "fallback_outbound_tag": "fallback-tag",
+  "observatory_tag": "observation-tag",
+  "outbound_selector": ["outbound1", "outbound2"],
+  "strategy": {
+    "method": "leastLoad",
+    "settings": {}
+  }
+}
+```
+
+**`tag`**: `string`
 - **Optional**: No
-- **Description**: Corresponds to the identifier of an outbound.
+- **Description**: The identifier of the balancer.
+
+**`fallback_outbound_tag`**: `string`
+- **Optional**: No
+- **Description**: The outbound tag used as fallback when all balancer options fail.
+
+**`observatory_tag`**: `string`
+- **Optional**: Yes
+- **Description**: The observation tag used for latency measurement.
+
+**`outbound_selector`**: `[string]`
+- **Optional**: No
+- **Description**: An array of outbound tags that the balancer selects from.
+
+**`strategy`**: `BalancerStrategy`
+- **Optional**: No
+- **Description**: The load balancing strategy.
+
+#### BalancerStrategy
+
+**`method`**: `"least_load"` | `"least_ping"` | `"round_robin"` | `"random"`
+- **Optional**: No
+- **Description**: The balancing method. Available strategies:
+  - `least_load` - Selects the outbound with the lowest load based on RTT and failure rates. Requires `settings` with `StrategyLeastLoadConfig`.
+  - `least_ping` - Selects the outbound with the lowest ping time. No settings required.
+  - `round_robin` - Cycles through outbounds in order. No settings required.
+  - `random` - Randomly selects an outbound. No settings required.
+
+**`settings`**: `object`
+- **Optional**: Yes
+- **Description**: Strategy-specific configuration settings. Required only for `least_load` strategy. Other strategies ignore this field.
+
+### StrategyLeastLoadConfig
+
+Required when `method` is `"least_load"`. This strategy selects the outbound with the lowest load based on RTT deviation and failure tolerance.
+
+```json
+{
+  "costs": [
+    {
+      "regexp": true,
+      "match": ".*",
+      "value": 1.0
+    }
+  ],
+  "baselines": ["..."],
+  "expected": 4,
+  "max_rtt": "5s",
+  "tolerance": 0.1
+}
+```
+
+**`costs`**: `[StrategyWeight]`
+- **Optional**: Yes
+- **Description**: Array of cost weights for outbound selection based on regex matching.
+
+**`baselines`**: `[string]`
+> - **Optional**: Yes
+> - **Description**: An array of duration strings (e.g., `["100ms", "500ms"]`) used as RTT deviation cost baselines. Outbounds with a cost below the baseline threshold are preferred for selection.
+
+> **`expected`**: `number`
+> - **Optional**: Yes
+> - **Description**: The number of outbounds to select from the sorted list. If `0` or unset, defaults to `1`. If `expected` is greater than available candidates, all candidates are returned.
+
+**`max_rtt`**: `string`
+> - **Optional**: Yes
+> - **Description**: Maximum round-trip time threshold (e.g., `"500ms"`). Outbounds with RTT exceeding this value are excluded from selection.
+
+**`tolerance`**: `number`
+> - **Optional**: Yes
+> - **Description**: The failure rate tolerance (0.0 to 1.0). Outbounds whose failure rate (fail/all) exceeds this threshold are excluded from selection.
+
+#### StrategyWeight
+
+**`regexp`**: `bool`
+- **Optional**: No
+- **Description**: Whether the match field is a regex pattern.
+
+**`match`**: `string`
+- **Optional**: No
+- **Description**: The pattern to match against outbound tags.
+
+**`value`**: `f64`
+- **Optional**: No
+- **Description**: The weight value associated with the match.

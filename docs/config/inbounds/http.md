@@ -1,13 +1,15 @@
+---
+title: HTTP Inbound
+lang: en-US
+---
+
 # HTTP Inbound
 
-HTTP protocol.
+The HTTP inbound protocol implements an HTTP-based proxy server.
 
-The more meaningful use of `http` inbound is to listen in a local network or on the local machine to provide local services for other programs.
+The HTTP inbound is most useful for listening on a local network or local machine to provide proxy services to other programs.
 
-::: tip TIP 1
-`http proxy` can only proxy the TCP protocol and cannot handle protocols based on UDP.
-:::
-
+> **Tip**: HTTP proxy can only proxy TCP protocol and cannot handle protocols based on UDP.
 
 ## InboundConfigurationObject
 
@@ -18,11 +20,17 @@ The more meaningful use of `http` inbound is to listen in a local network or on 
 }
 ```
 
-> **`listen`**: *string*
-- **Optional**: No
-- **Description**: The listening address, either an available IPV4 or IPV6 address.
+### Parameters
 
+> **`listen`**: *string*
+> - **Optional**: No
+> - **Description**: The listening address. Must be a valid IPv4 or IPv6 address.
 
 > **`port`**: *number*
-- **Optional**: No
-- **Description**: The listening port number, either an available port number.
+> - **Optional**: No
+> - **Description**: The listening port number. Must be an available port number.
+
+### Features
+
+- ✅ TCP support only
+- ❌ UDP not supported

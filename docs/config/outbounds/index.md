@@ -1,10 +1,15 @@
+---
+title: Outbound Proxy
+lang: en-US
+---
+
 # Outbound Proxy
 
-Outbound connections are used for sending data and can use any of the available protocols listed in [outbounds](#outbounds).
+Outbound connections are used to send data and can use any of the available protocols listed below.
 
 ## OutboundObject
 
-The `OutboundObject` corresponds to a subelement of the `Outbounds` item in the configuration file.
+The `OutboundObject` corresponds to a subelement of the `outbounds` item in the configuration file.
 
 ```json
 {
@@ -14,7 +19,7 @@ The `OutboundObject` corresponds to a subelement of the `Outbounds` item in the 
       "detour": "identifier",
       "protocol": "protocol_name",
       "settings": {},
-      "stream_settings":{}
+      "stream_settings": {}
     }
   ]
 }
@@ -23,37 +28,35 @@ The `OutboundObject` corresponds to a subelement of the `Outbounds` item in the 
 ### Parameters
 
 > **`tag`**: *string*
-
-- **Optional**: Yes
-- **Default value**: `""`
-- **Description**: The identifier of this outbound connection, used to locate this connection in other configurations.
+> - **Optional**: Yes
+> - **Default value**: `""`
+> - **Description**: The identifier of this outbound connection, used to locate it in other configurations (router rules, detours, etc.).
 
 > **`detour`**: *string*
+> - **Optional**: Yes
+> - **Default value**: `""`
+> - **Description**: The tag identifier of the target outbound connection for routing this outbound's traffic. Useful for chaining outbounds.
 
-- **Optional**: Yes
-- **Default value**: `""`
-- **Description**: The identifier of the target outbound connection for routing this outbound traffic.
+> **`protocol`**: `"freedom"` | `"block"` | `"socks5"` | `"vless"` | `"vmess"` | `"trojan"` | `"shadowsocks"` | `"tuic"` | `"hysteria2"`
+> - **Optional**: No
+> - **Description**: The connection protocol name. Each outbound must use one of the available protocols.
 
-> **`protocol`**: `"freedom"` | `"block"` |`"socks5"` | `"vless"` | `"vmess"` | `"trojan"` | `"shadowsocks"` | `"tuic"` | `"hysteria2"` 
-- **Optional**: No
-- **Description**: The connection protocol name.
+> **`settings`**: OutboundConfigurationObject
+> - **Optional**: Yes
+> - **Description**: The specific configuration content varies depending on the protocol. See `OutboundConfigurationObject` in each protocol for details. `freedom` and `block` outbounds have empty settings.
 
+> **`stream_settings`**: [StreamSettingsObject](/config/transports/index.md)
+> - **Optional**: Yes
+> - **Description**: The transport configuration for the outbound connection. Required for most protocols except `freedom` and `block`. Specifies the underlying transport method (TCP, WebSocket, gRPC, etc.) and security (TLS, Reality).
 
-> `settings`: OutboundConfigurationObject
-- **Optional**: Yes
-- **Description**: The specific configuration content varies depending on the protocol. See `OutboundConfigurationObject` in each protocol for details.
+### Available Outbounds
 
-
-> `stream_settings`: [StreamSettingsObject](/config/transports/index.md)
-- **Optional**: Yes
-- **Description**: The underlying transport method is the way the current outbound connects with other side.
-
-# Outbounds
-- [Freedom](../outbounds/freedom.md)
-- [Block](../outbounds/block.md)
-- [Vless](../outbounds/vless.md)
-- [Vmess](../outbounds/vmess.md)
-- [Trojan](../outbounds/trojan.md)
-- [ShadowSocks](../outbounds/shadowsocks.md)
-- [Tuic](../outbounds/tuic.md)
-- [Hysteria2](../outbounds/hysteria2.md)
+- [Freedom (Direct)](../outbounds/freedom.md) - Direct connection to destination
+- [Block (Blackhole)](../outbounds/block.md) - Blocks all outbound traffic
+- [Socks5](../outbounds/socks.md) - SOCKS5 outbound proxy
+- [VLESS](../outbounds/vless.md) - Stateless lightweight transport
+- [VMess](../outbounds/vmess.md) - Encrypted transport protocol
+- [Trojan](../outbounds/trojan.md) - Trojan protocol
+- [ShadowSocks](../outbounds/shadowsocks.md) - ShadowSocks protocol
+- [TUIC](../outbounds/tuic.md) - TUIC protocol (QUIC-based)
+- [Hysteria2](../outbounds/hysteria2.md) - Hysteria2 protocol (QUIC-based)
