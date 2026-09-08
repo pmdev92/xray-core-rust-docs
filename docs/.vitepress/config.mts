@@ -6,8 +6,29 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Build & Run', link: '/build' },
-      { text: 'Config Reference', link: '/config' }
+      {
+        text: 'Build & Run',
+        items: [
+          { text: 'Overview', link: '/build/' },
+          { text: 'Build', link: '/build/build' },
+          { text: 'Run', link: '/build/run' },
+          { text: 'iOS', link: '/build/ios' },
+          { text: 'Android', link: '/build/android' },
+        ]
+      },
+      {
+        text: 'Config Reference',
+        items: [
+          { text: 'Overview', link: '/config/' },
+          { text: 'Log', link: '/config/log' },
+          { text: 'Observations', link: '/config/observations' },
+          { text: 'Stats', link: '/config/stats' },
+          { text: 'Inbound Protocols', link: '/config/inbounds' },
+          { text: 'Outbound Protocols', link: '/config/outbounds' },
+          { text: 'Transports', link: '/config/transports' },
+          { text: 'Router', link: '/config/router' },
+        ]
+      }
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/pmdev92/xray-core-rust' }
@@ -16,24 +37,26 @@ export default defineConfig({
       '/config/': [
         {
           items: [
-            { text: 'Config', link: '/config' },
-            { text: 'Log', link: '/config/log' },
-            { text: 'Observations', link: '/config/observations' },
-            { text: 'Stats', link: '/config/stats' },
+            { text: 'Config', link: '/config/' },
+            { text: 'Log', link: '/config/log/' },
+            { text: 'Observations', link: '/config/observations/' },
+            { text: 'Stats', link: '/config/stats/' },
             {
               text: 'Inbound Protocols',
+              link: '/config/inbounds',
               collapsed: true,
               items: [
-                { text: 'Overview', link: '/config/inbounds' },
+                { text: 'Overview', link: '/config/inbounds/' },
                 { text: 'HTTP', link: '/config/inbounds/http' },
                 { text: 'SOCKS5', link: '/config/inbounds/socks' },
               ]
             },
             {
               text: 'Outbound Protocols',
+              link: '/config/outbounds/',
               collapsed: true,
               items: [
-                { text: 'Overview', link: '/config/outbounds' },
+                { text: 'Overview', link: '/config/outbounds/' },
                 { text: 'Freedom', link: '/config/outbounds/freedom' },
                 { text: 'Block', link: '/config/outbounds/block' },
                 { text: 'Socks5', link: '/config/outbounds/socks' },
@@ -47,9 +70,10 @@ export default defineConfig({
             },
             {
               text: 'Transports',
+              link: '/config/transports/',
               collapsed: true,
               items: [
-                { text: 'Overview', link: '/config/transports' },
+                { text: 'Overview', link: '/config/transports/' },
                 { text: 'Tcp', link: '/config/transports/tcp' },
                 { text: 'Websocket', link: '/config/transports/websocket' },
                 { text: 'HttpUpgrade', link: '/config/transports/http-upgrade' },
@@ -60,14 +84,18 @@ export default defineConfig({
                 { text: 'Reality', link: '/config/transports/reality' },
               ]
             },
-            { text: 'Router', link: '/config/router' },
+            { text: 'Router', link: '/config/router/' },
           ]
         }
       ],
       '/build/': [
         {
           items: [
-            { text: 'Build & Run', link: '/build' },
+            { text: 'Overview', link: '/build/' },
+            { text: 'Build', link: '/build/build' },
+            { text: 'Run', link: '/build/run' },
+            { text: 'iOS', link: '/build/ios' },
+            { text: 'Android', link: '/build/android' },
           ]
         }
       ]
