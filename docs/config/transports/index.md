@@ -67,27 +67,3 @@ Transports specify how Xray Core Rust communicates with peers. Both ends of a co
 > **`reality_settings`**: [RealityObject](./reality.md)
 > - **Optional**: Yes
 > - **Description**: Configures REALITY encryption settings. REALITY is an advanced encryption technology developed in-house, providing higher security than vanilla TLS.
-
-### Transport & Security Combinations
-
-| Network | Security | Description |
-|---------|----------|-------------|
-| `tcp` | `none` | Plain TCP connection |
-| `tcp` | `tls` | TCP with TLS encryption |
-| `tcp` | `reality` | TCP with REALITY encryption |
-| `ws` | `none` | Plain WebSocket connection |
-| `ws` | `tls` | WebSocket with TLS encryption |
-| `ws` | `reality` | WebSocket with REALITY encryption |
-| `http_upgrade` | `none` | Plain HTTP Upgrade |
-| `http_upgrade` | `tls` | HTTP Upgrade with TLS |
-| `http_upgrade` | `reality` | HTTP Upgrade with REALITY |
-| `xhttp` | `none` | XHTTP without encryption |
-| `xhttp` | `tls` | XHTTP with TLS |
-| `xhttp` | `reality` | XHTTP with REALITY |
-| `http` | `none` | HTTP/2 without encryption |
-| `http` | `tls` | HTTP/2 with TLS |
-| `http` | `reality` | HTTP/2 with REALITY |
-| `grpc` | `none` | Plain gRPC connection |
-| `grpc` | `tls` | gRPC with TLS encryption |
-| `grpc` | `reality` | gRPC with REALITY encryption |
-| `reality` | `reality` | Full REALITY transport |

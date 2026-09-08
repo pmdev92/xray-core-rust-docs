@@ -24,13 +24,13 @@ A common use case is splitting domestic and foreign traffic. Xray Core Rust uses
 
 ### Parameters
 
-**`rules`**: `[[RuleObject]](/config/router)`
+**`rules`**: [RuleObject](/config/router#RuleObject)
 - **Optional**: Yes
 - **Description**: An array of routing rules. Rules are evaluated from top to bottom, and the first matching rule determines the outbound.
 
 > **Tip**: When no rules match, traffic is sent through the first outbound by default.
 
-**`balancers`**: `[[BalancerConfig]](/config/router)`
+**`balancers`**: [BalancerConfig](/config/router#BalancerConfig)
 - **Optional**: Yes
 - **Description**: An array of outbound balancer configurations for load-balanced traffic distribution.
 

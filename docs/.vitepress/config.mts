@@ -6,6 +6,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Build & Run', link: '/build' },
       { text: 'Config Reference', link: '/config' }
     ],
     socialLinks: [
@@ -60,6 +61,13 @@ export default defineConfig({
               ]
             },
             { text: 'Router', link: '/config/router' },
+          ]
+        }
+      ],
+      '/build/': [
+        {
+          items: [
+            { text: 'Build & Run', link: '/build' },
           ]
         }
       ]
