@@ -57,9 +57,3 @@ TLS transport provides transport layer encryption using standard TLS certificate
 > - **Default value**: `null`
 > - **Description**: Array of valid DNS names for peer certificate verification (SAN/CN); arbitrary/non-DNS strings are not allowed. When `null` (default) standard name verification applies; only when set to array (and `verify` is `true`) do these names apply. If `verify` is `false`, all verification is disabled regardless.
 
-### Features
-
-- ✅ Early Data (0-RTT)
-- ✅ XTLS supported
-- ✅ ALPN support
-- ✅ SNI support
