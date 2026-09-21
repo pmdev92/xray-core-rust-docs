@@ -15,7 +15,9 @@ TLS transport provides transport layer encryption using standard TLS certificate
   "verify": true,
   "is_early_data": false,
   "early_data_len": 2000,
-  "alpn": []
+  "alpn": [],
+  "pinned_peer_cert_sha256": null,
+  "verify_peer_cert_by_name": null
 }
 ```
 
@@ -28,7 +30,7 @@ TLS transport provides transport layer encryption using standard TLS certificate
 > **`verify`**: *bool*
 > - **Optional**: Yes
 > - **Default value**: `true`
-> - **Description**: Whether to verify TLS certificates. Setting to `false` allows insecure TLS connections (self-signed or invalid certificates).
+> - **Description**: Whether to verify TLS certificates. When `true`, standard verification applies and `pinned_peer_cert_sha256`/`verify_peer_cert_by_name` are applied if set to arrays; when `false`, all verification is fully disabled and these fields are ignored.
 
 > **`is_early_data`**: *bool*
 > - **Optional**: Yes
@@ -42,8 +44,18 @@ TLS transport provides transport layer encryption using standard TLS certificate
 
 > **`alpn`**: `[string]`
 > - **Optional**: Yes
-> - **Default value**: `""`
+> - **Default value**: `null`
 > - **Description**: An array of strings specifying the ALPN (Application-Layer Protocol Negotiation) values used in TLS handshakes. Common values include `"h2"` (HTTP/2) and `"http/1.1"`.
+
+> **`pinned_peer_cert_sha256`**: `[string]` | `null`
+> - **Optional**: Yes
+> - **Default value**: `null`
+> - **Description**: Array of SHA-256 hashes of allowed peer certificates. When `null` (default) standard verification applies; only when set to array (and `verify` is `true`) do pinned hashes apply. If `verify` is `false`, all verification is disabled regardless.
+
+> **`verify_peer_cert_by_name`**: `[string]` | `null`
+> - **Optional**: Yes
+> - **Default value**: `null`
+> - **Description**: Array of valid DNS names for peer certificate verification (SAN/CN); arbitrary/non-DNS strings are not allowed. When `null` (default) standard name verification applies; only when set to array (and `verify` is `true`) do these names apply. If `verify` is `false`, all verification is disabled regardless.
 
 ### Features
 
