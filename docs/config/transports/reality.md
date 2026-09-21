@@ -14,7 +14,6 @@ REALITY works similarly to TLS in configuration but offers significantly enhance
 ```json
 {
   "server_name": "",
-  "verify": true,
   "public_key": "",
   "short_id": "",
   "version_x": "",
@@ -31,11 +30,6 @@ REALITY works similarly to TLS in configuration but offers significantly enhance
 > **`server_name`**: *string*
 > - **Optional**: No
 > - **Description**: The server SNI (Server Name Indication). Used to identify the server during the TLS handshake.
-
-> **`verify`**: *bool*
-> - **Optional**: Yes
-> - **Default value**: `true`
-> - **Description**: Whether to verify TLS certificates. Setting to `false` allows insecure connections.
 
 > **`public_key`**: *string*
 > - **Optional**: No
@@ -71,14 +65,5 @@ REALITY works similarly to TLS in configuration but offers significantly enhance
 > - **Optional**: Yes
 > - **Default value**: `""`
 > - **Description**: An array of strings specifying the ALPN values used in TLS handshakes.
-
-### Features
-
-- ✅ Early Data Supported
-- ✅ XTLS Supported
-- ✅ Advanced encryption
-- ✅ Higher security than vanilla TLS
-- ✅ SNI support
-- ✅ ALPN support
 
 > **Note**: REALITY is currently marked as "Needs Improvement" in the project roadmap, but is fully functional for production use.
