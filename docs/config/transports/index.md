@@ -18,7 +18,7 @@ Transports specify how Xray Core Rust communicates with peers. Both ends of a co
   "tcp_settings": {},
   "ws_settings": {},
   "http_upgrade_settings": {},
-  "xhttp_settings": {},
+  "x_http_settings": {},
   "http_settings": {},
   "grpc_settings": {},
   "tls_settings": {},
